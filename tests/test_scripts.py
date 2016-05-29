@@ -176,11 +176,11 @@ class ScriptTestCase(unittest.TestCase):
         maker = ScriptMaker(srcdir, dstdir, add_launchers=True)
 
         # add '-O' option to shebang to run in optimized mode
-        with open(os.path.join(HERE, 'scripts', 'script6.py'), 'r') as src, \
-                open(os.path.join(srcdir, 'script6-optimized.py'), 'w') as dst:
-            shebang = src.readline().rstrip()
-            dst.write(shebang + " -O\n")
-            dst.write(src.read())
+        with open(os.path.join(HERE, 'scripts', 'script6.py'), 'r') as src:
+            with open(os.path.join(srcdir, 'script6-optimized.py'), 'w') as dst:
+                shebang = src.readline().rstrip()
+                dst.write(shebang + " -O\n")
+                dst.write(src.read())
 
         files = maker.make('script6-optimized.py')
         self.assertEqual(len(files), 1)
